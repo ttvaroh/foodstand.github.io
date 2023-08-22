@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recipe Lookup
+{% endblock %}
+
+{% block main %}
+    <form action="/lookup" method="post">
+        <div class="mb-3">
+            <input autocomplete="on" autofocus class="form-control mx-auto w-auto" id="recipe" name="recipe" placeholder="Recipe Name" type="text">
+        </div>
+        <div>
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+{% endblock %}

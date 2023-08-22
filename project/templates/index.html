@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+    {% for recipe in recipes %}
+    <div class="container bg-yellow txt-irregular">
+        <h2>{{ recipe.recipe_name }}</h2>
+        <p>{{ recipe.recipe_description }}</p>
+        <ul>
+            {% for ingredient in recipe.ingredients %}
+                <li>{{ ingredient.ingredient }} - {{ ingredient.quantity }} {{ ingredient.unit }}</li>
+            {% endfor %}
+        </ul>
+        <p>{{ recipe.recipe_instructions }}</p>
+        <p><b>Meal Type:</b> {{ recipe.recipe_type }}</p>
+            <div class="buttons">
+                <form action="/edit" method="post">
+                    <input type="hidden" name="recipe_id" value="{{ recipe.recipe_id }}">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
+                <form action="/delete" method="post">
+                    <input type="hidden" name="recipe_id" value="{{ recipe.recipe_id }}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        <br>
+    </div>
+    <br><br>
+    {% endfor %}
+
+{% endblock %}

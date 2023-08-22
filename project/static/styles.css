@@ -1,0 +1,60 @@
+body {
+    background-image: url("FoodImageBackground.webp");
+    background-size: cover;
+  }
+  .bg-green {
+    background-color: rgba(92,184,92,0.5);
+  }
+  .bg-orange {
+    background-color: rgba(240,173,78,0.5);
+  }
+
+/* Size for brand */
+nav .navbar-brand
+{
+    font-size: xx-large;
+}
+
+/* Colors for brand */
+nav .navbar-brand .blue
+{
+    color: #3e99c0;
+}
+
+nav .navbar-brand .yellow
+{
+    color: #fbe882;
+}
+
+.bg-blue {
+    background-color: #3e99c0;
+  }
+
+.txt-blue {
+    color: #3e99c0;
+}
+
+.bg-yellow {
+    background-color: #fbe882;
+  }
+
+.bg-regular {
+    background-color: #1f2527;
+}
+
+.txt-irregular {
+  color: #1f2527;
+}
+
+.beige {
+    background-color: #d8b48b;
+}
+
+.transparent_background {
+    background-color: rgba(255,0,0,0.5);
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}

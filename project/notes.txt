@@ -1,0 +1,29 @@
+You’re welcome to alter the aesthetics of the sites, as via
+- bootswatch.com,
+- getbootstrap.com/docs/5.1/content,
+- getbootstrap.com/docs/5.1/components, and/or memegen.link
+
+Version 1 - 12/01/22
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE recipes (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, recipe_name TEXT NOT NULL, recipe_type TEXT NOT NULL);
+CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL);
+CREATE UNIQUE INDEX username ON users (username);
+
+
+Version 2 - 12/12/22
+CREATE TABLE sqlite_sequence(name,seq);
+
+CREATE TABLE users (user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+username TEXT NOT NULL, hash TEXT NOT NULL);
+
+CREATE UNIQUE INDEX username ON users (username);
+
+CREATE TABLE recipes(
+recipe_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, creator_id INTEGER NOT NULL,
+recipe_name TEXT NOT NULL, recipe_instructions TEXT NOT NULL,
+recipe_description TEXT, recipe_type TEXT NOT NULL,
+FOREIGN KEY(creator_id) REFERENCES users(user_id));
+
+CREATE TABLE ingredient_data (recipe_id INTEGER NOT NULL, ingredient TEXT NOT NULL,
+quantity FLOAT(6) NOT NULL, unit TEXT NOT NULL,
+FOREIGN KEY(recipe_id) REFERENCES recipes(recipe_id));

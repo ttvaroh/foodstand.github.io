@@ -1,0 +1,147 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create
+{% endblock %}
+
+{% block main %}
+<div class="container bg-yellow txt-irregular">
+    <h1 class="text-center py-3">Create a Recipe</h1>
+    <p class="text-center py-3"><b>
+        Let's create a recipe together! Fill out the form and let's see what we can come up with.
+    </b></p>
+    <form action="/create" method="post">
+        <div class="form-group">
+            <label for="dishName"><b>Name of Dish:</b></label><br>
+            <input type="text" id="dishName" name="dishName" placeholder="Enter recipe name"><br><br>
+
+            <label for="ingredients"><b>Ingredients:</b></label><br>
+            <div id="ingredients">
+            </div>
+            <button id="add-ingredient-button">Add Ingredient</button><br><br>
+
+            <label for="instructions"><b>Instructions:</b></label><br>
+            <textarea name="instructions" id="instructions" cols="50" rows="5"
+            placeholder="Enter instructions"></textarea><br><br>
+
+            <label for="description"><b>Description:</b></label><br>
+            <textarea name="description" id="description" cols="50" rows="4"
+            placeholder="Enter description"></textarea><br><br>
+
+            <label for="type"><b>Meal Type:</b></label><br>
+            <select name="type" class="form-select" aria-label="Default select example">
+                <option value="any">Any</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinnner</option>
+                <option value="dessert">Dessert</option>
+                <option value="snack">Snack</option>
+                <option value="drink">Drink</option>
+            </select>
+            <button class="btn btn-primary" type="submit" value="createButton">Create</button><br>
+        </div>
+    </form>
+</div>
+<script>
+    const addIngredientButton = document.getElementById("add-ingredient-button");
+    const ingredientsContainer = document.getElementById("ingredients");
+    let id = 0;
+
+    addIngredientButton.addEventListener("click", () => {
+        event.preventDefault();
+
+        const nameInputs = document.querySelectorAll(".ingredient input[type='text']");
+        const quantityInputs = document.querySelectorAll(".ingredient input[type='number']");
+
+        // Check if all the input fields are filled
+        let allFilled = true;
+        for (let i = 0; i < nameInputs.length; i++) {
+            if (!nameInputs[i].value || !quantityInputs[i].value) {
+            allFilled = false;
+            break;
+            }
+        }
+
+        if (allFilled) {
+            // Create a new div element to hold the new ingredient
+            const newIngredientDiv = document.createElement("div");
+            newIngredientDiv.classList.add("ingredient");
+
+            const newPanel = document.createElement("p");
+            newPanel.id = id;
+
+
+            // Create the input fields for the new ingredient
+            const nameInput = document.createElement("input");
+            nameInput.type = "text";
+            nameInput.placeholder = "Ingredient Name";
+            nameInput.id = id;
+            nid = "ingredient" + id;
+            nameInput.name = nid
+            newPanel.appendChild(nameInput);
+
+            const quantityInput = document.createElement("input");
+            quantityInput.type = "number";
+            quantityInput.step = "0.01"
+            quantityInput.placeholder = "Quantity";
+            quantityInput.id = id;
+            qid = "quantity" + id;
+            quantityInput.name = qid
+            newPanel.appendChild(quantityInput);
+
+            var newList = document.createElement("select");
+            newList.appendChild(new Option("tsp", "teaspoon"));
+            newList.appendChild(new Option("tbsp", "tablespoon"));
+            newList.appendChild(new Option("cups", "cups"));
+            newList.appendChild(new Option("grams", "grams"));
+            newList.appendChild(new Option("oz", "ounce"));
+            newList.appendChild(new Option("fl. oz.", "fluid_ounce"));
+            newList.appendChild(new Option("amount", "amount"));
+            newList.id = id;
+            lid = "unit" + id;
+            newList.name = lid
+            newPanel.appendChild(newList);
+
+            // Create the delete button for the new ingredient
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete Ingredient";
+            deleteButton.addEventListener("click", () => {
+                event.preventDefault();
+
+                // Remove the ingredient from the ingredients container
+                newIngredientDiv.remove();
+                newPanel.remove();
+
+                // Reset the id's of all ingredients
+                const ingredientPanels = document.querySelectorAll(".ingredient p");
+                if (ingredientPanels.length == 0) {
+                    id = 0;
+                }
+                for (let i = 0; i < ingredientPanels.length; i++) {
+                    ingredientPanels[i].id = i;
+
+                    // Update the id's of the input fields and select element within the ingredient panel
+                    const nameInput = ingredientPanels[i].querySelector("input[type='text']");
+                    nameInput.id = i;
+                    nameInput.name = "ingredient" + i;
+                    const quantityInput = ingredientPanels[i].querySelector("input[type='number']");
+                    quantityInput.id = i;
+                    quantityInput.name = "quantity" + i;
+                    const unitSelect = ingredientPanels[i].querySelector("select");
+                    unitSelect.id = i;
+                    unitSelect.name = "unit" + i;
+                    id = i + 1;
+                }
+            });
+
+            newPanel.appendChild(deleteButton);
+
+            newIngredientDiv.appendChild(newPanel);
+            // Add the new ingredient to the ingredients container and add one to id for next click
+            ingredientsContainer.appendChild(newIngredientDiv);
+
+            id++;
+        }
+    });
+</script>
+{% endblock %}
